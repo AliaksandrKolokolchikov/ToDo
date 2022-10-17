@@ -1,5 +1,5 @@
 import create from "zustand/react";
-
+import { generateID } from '../stores/helpers'
 interface Task {
     id: string;
     title: string;
@@ -14,10 +14,37 @@ interface ToDoStore {
 }
 
 export const useToDoStore = create<ToDoStore>((set, get) => ({
-    tasks: [],
+    tasks: [
+        {
+            id: 'sdssdsd',
+            title: 'Sdsdsdsd',
+            createdAt: 1211
+        }
+    ],
     createTask: (title) => {
         const { tasks } = get();
+        const newTask = {
+            id: generateID(),
+            title,
+            createdAt: Date.now(),
+        }
+        set({
+            tasks: [newTask].concat(tasks),
+        })
     },
-    updateTask: (id, title) => { },
-    removeTask: (id) => { },
+    updateTask: (id: string, title: string) => {
+        const { tasks } = get()
+        set({
+            tasks: tasks.map((task) => ({
+                ...task,
+                title: task.id === id ? title : task.title,
+            }))
+        })
+    },
+    removeTask: (id: string) => {
+        const { tasks } = get()
+        set({
+            tasks: tasks.filter((task) => task.id !== id)
+        })
+    },
 }))
