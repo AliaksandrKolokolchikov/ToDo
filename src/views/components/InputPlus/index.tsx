@@ -32,7 +32,7 @@ export const InputPlus: React.FC<InputPlusProps> = ({
             <button
                 onClick={addTask}
                 aria-label='Add'
-                className={styles.inputPlusValue}
+                className={styles.inputPlusButton}
             />
         </div>
     )
